@@ -28,7 +28,9 @@ def coords(tile_id):
 
 def iterate_tiles(tile_id):
     print "running: {}".format(tile_id)
+    print "getting coordinates"
     ymax, xmin, ymin, xmax = coords(tile_id)
+    print "coordinates are: ymax-", ymax, "; xmin-", xmin, "; ymin-", ymin, "; xmax-", xmax
     vrtname = create_vrt()
     out = '{}_carbon.tif'.format(tile_id)
     warp = ['gdalwarp', '-t_srs', 'EPSG:4326', '-co', 'COMPRESS=LZW', '-tr', '0.00025', '0.00025', '-tap', '-te', xmin, ymin, xmax, ymax, '-dstnodata', '-9999', vrtname, out]
