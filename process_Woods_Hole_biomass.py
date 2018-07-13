@@ -7,7 +7,7 @@ def create_vrt():
     # builtdvrt = ['gdalbuildvrt', vrtname, os.path.join(parent_dir, '/raw/*.tif')]
     # builtdvrt = ['gdalbuildvrt', vrtname, '*.tif']
     # subprocess.check_call(builtdvrt)
-    os.system('gdalbuildvrt {} ../*.tif'.format(vrtname))
+    os.system('gdalbuildvrt {} ../raw/*.tif'.format(vrtname))
 
     return vrtname
 
