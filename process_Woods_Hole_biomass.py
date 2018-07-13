@@ -4,7 +4,8 @@ import os
 def create_vrt():
     print "locn", os.path.dirname(os.path.dirname(__file__))
     vrtname = 'carbon_v4.vrt'
-    builtdvrt = ['gdalbuildvrt', vrtname, './raw/*.tif']
+    parent_dir = os.path.dirname(os.path.dirname(__file__))
+    builtdvrt = ['gdalbuildvrt', vrtname, os.path.join(parent_dir, '/raw/*.tif')]
     subprocess.check_call(builtdvrt)
 
     return vrtname
