@@ -5,8 +5,9 @@ def create_vrt():
     vrtname = 'carbon_v4.vrt'
     # parent_dir = os.path.dirname(os.path.dirname(__file__))
     # builtdvrt = ['gdalbuildvrt', vrtname, os.path.join(parent_dir, '/raw/*.tif')]
-    builtdvrt = ['gdalbuildvrt', vrtname, '*.tif']
-    subprocess.check_call(builtdvrt)
+    # builtdvrt = ['gdalbuildvrt', vrtname, '*.tif']
+    # subprocess.check_call(builtdvrt)
+    os.system('gdalbuildvrt {} *.tif'.format(vrtname))
 
     return vrtname
 
