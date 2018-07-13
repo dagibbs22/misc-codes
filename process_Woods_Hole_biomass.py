@@ -5,9 +5,9 @@ def file_list(tifs):
 
     print "file list will come from here"
 
-    file_list = ['ls {}'.format(tifs)]
+    # file_list = ['ls {}'.format(tifs)]
 
-    subprocess.check_call(file_list)
+    os.system('ls {}'.format(tifs))
 
     # cmd = ['aws', 's3', 'ls', dest, '>', '{0}tiles.txt'.format(pool)]
     # subprocess.check_call(cmd, shell=True)
