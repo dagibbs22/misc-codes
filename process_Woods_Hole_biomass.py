@@ -7,7 +7,7 @@ def file_list(tifs):
 
     # file_list = ['ls {}'.format(tifs)]
 
-    os.system('ls {} > carbon_tiles.txt'.format(tifs))
+    os.system('ls {}*.tif > carbon_tiles.txt'.format(tifs))
 
     # cmd = ['aws', 's3', 'ls', dest, '>', '{0}tiles.txt'.format(pool)]
     # subprocess.check_call(cmd, shell=True)
