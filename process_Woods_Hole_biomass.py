@@ -1,6 +1,8 @@
 import subprocess
+import os
 
 def create_vrt():
+    print os.path.dirname(os.path.dirname(__file__))
     vrtname = 'carbon_v4.vrt'
     builtdvrt = ['gdalbuildvrt', vrtname, '../raw/*.tif']
     subprocess.check_call(builtdvrt)
