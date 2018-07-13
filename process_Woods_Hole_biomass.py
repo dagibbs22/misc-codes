@@ -5,7 +5,12 @@ def file_list(tifs):
 
     print "file list will come from here"
 
-    list = ['ls {}'].format(tifs)
+    file_list = ['ls {}'.format(tifs)]
+
+    subprocess.check_call(file_list)
+
+    # cmd = ['aws', 's3', 'ls', dest, '>', '{0}tiles.txt'.format(pool)]
+    # subprocess.check_call(cmd, shell=True)
 
 
 def create_vrt(tifs):
