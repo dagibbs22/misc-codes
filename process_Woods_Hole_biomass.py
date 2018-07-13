@@ -2,7 +2,7 @@ import subprocess
 
 def create_vrt():
     vrtname = 'carbon_v4.vrt'
-    builtdvrt = ['gdalbuildvrt', vrtname, 'raw/*.tif']
+    builtdvrt = ['gdalbuildvrt', vrtname, '../raw/*.tif']
     subprocess.check_call(builtdvrt)
 
     return vrtname
@@ -31,7 +31,9 @@ def iterate_tiles(tile_id):
     print "getting coordinates"
     ymax, xmin, ymin, xmax = coords(tile_id)
     print "coordinates are: ymax-", ymax, "; xmin-", xmin, "; ymin-", ymin, "; xmax-", xmax
+    print "creating vrt"
     vrtname = create_vrt()
+    print "vrt created"
     out = '{}_carbon.tif'.format(tile_id)
     warp = ['gdalwarp', '-t_srs', 'EPSG:4326', '-co', 'COMPRESS=LZW', '-tr', '0.00025', '0.00025', '-tap', '-te', xmin, ymin, xmax, ymax, '-dstnodata', '-9999', vrtname, out]
 
