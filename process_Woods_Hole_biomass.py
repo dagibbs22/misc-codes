@@ -1,17 +1,26 @@
 import subprocess
 import os
 
-def file_list(tifs):
+def list_tiles(tif_dir):
 
     print "file list will come from here"
+    os.system('ls {}*.tif > carbon_tiles.txt'.format(tif_dir))
 
-    # file_list = ['ls {}'.format(tifs)]
+    file_list= []
 
-    os.system('ls {}*.tif > carbon_tiles.txt'.format(tifs))
+    # Iterates through the text file to get the names of the tiles and appends them to list
+    with open('carbon_tiles.txt', 'r') as tile:
+        for line in tile:
+            # num = len(line.strip('\n').split(" "))
+            #
+            # tile_name = line.strip('\n').split(" ")[num - 1]
+            #
+            # tile_short_name = tile_name.replace('_{0}.tif'.format(pool), '')
+            #
+            # file_list.append(tile_short_name)
+    print "hello"
 
-    # cmd = ['aws', 's3', 'ls', dest, '>', '{0}tiles.txt'.format(pool)]
-    # subprocess.check_call(cmd, shell=True)
-
+    print file_list
 
 def create_vrt(tifs):
     vrtname = 'carbon_v4.vrt'
@@ -57,12 +66,14 @@ def process_tile(tile_id):
     subprocess.check_call(cmd)
     print "tile copied to s3"
 
-tifs = '../raw/'
+tif_dir = '../raw/'
 
 print "creating vrt"
-vrtname = create_vrt(tifs)
+vrtname = create_vrt(tif_dir)
 print "vrt created"
 
-list = file_list(tifs)
+print "getting list of tiles"
+list = list_tiles(tif_dir)
+print "tile list retrieved"
 
 process_tile('10N_110E')
