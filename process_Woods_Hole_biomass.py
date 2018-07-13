@@ -52,12 +52,11 @@ def process_tile(tile_id):
     subprocess.check_call(cmd)
     print "tile copied to s3"
 
+tifs = '../raw/'
 
 print "creating vrt"
-vrtname = create_vrt()
+vrtname = create_vrt(tifs)
 print "vrt created"
-
-tifs = '../raw/'
 
 # list = file_list(tifs)
 
