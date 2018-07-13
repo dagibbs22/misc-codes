@@ -31,7 +31,7 @@ def iterate_tiles(tile_id):
     ymax, xmin, ymin, xmax = coords(tile_id)
     vrtname = create_vrt()
     out = '{}_carbon.tif'.format(tile_id)
-    warp = ['gdalwarp', '-t_srs', 'EPSG:4326', '-tr', '.00025', '.00025', '-tap', '-te', xmin, ymin, xmax, ymax, '-dstnodata', '0', vrtname, out]
+    warp = ['gdalwarp', '-t_srs', 'EPSG:4326', '-co', 'COMPRESS=LZW', '-tr', '0.00025', '0.00025', '-tap', '-te', xmin, ymin, xmax, ymax, '-dstnodata', '-9999', vrtname, out]
 
     subprocess.check_call(warp)
 
