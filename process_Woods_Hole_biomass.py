@@ -58,6 +58,6 @@ print "creating vrt"
 vrtname = create_vrt(tifs)
 print "vrt created"
 
-# list = file_list(tifs)
+list = file_list(tifs)
 
 process_tile('10N_110E')
