@@ -2,29 +2,23 @@ import subprocess
 import os
 import multiprocessing
 
+# Lists the tiles in a folder in s3
 def download_tiles(source):
 
-    print "Hello"
-    print source
+    ## For an s3 folder in a bucket using AWSCLI
+    # Captures the list of the files in the folder
+    out = subprocess.Popen(['aws', 's3', 'ls', source], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    stdout, stderr = out.communicate()
 
-    # Gets the list of tiles in s3 and pipes them to a textfile
-    source = 's3://WHRC-carbon/WHRC_V4/As_provided/'
-    cmd = ['aws', 's3', 'ls', source, '>', 's3_carbon_tiles.txt']
-    cmd = ['aws', 's3', 'ls', source]
-    subprocess.check_call(cmd, shell=True)
-
-    # pool= 'carbon'
-    # dest = 's3://gfw-files/sam/carbon_budget/carbon_030218/{}/'.format(pool)
-    # cmd = ['aws', 's3', 'ls', dest, '>', '{0}tiles.txt'.format(pool)]
-    # subprocess.check_call(cmd, shell=True)
-
-    # os.system = ('aws s3 ls {} > s3_carbon_tiles.txt'.format(source))
-
+    # Writes the output string to a text file for easier interpretation
+    s3_tiles = open("s3_tiles.txt", "w")
+    s3_tiles.write(stdout)
+    s3_tiles.close()
 
     file_list= []
 
     # Iterates through the text file to get the names of the tiles and appends them to list
-    with open('s3_carbon_tiles.txt', 'r') as tile:
+    with open('s3_tiles.txt', 'r') as tile:
         for line in tile:
 
             num = len(line)
@@ -35,6 +29,8 @@ def download_tiles(source):
             file_list.append(tile_short)
 
     print file_list
+
+
 
 # creates a virtual raster mosaic
 def create_vrt(tifs):
