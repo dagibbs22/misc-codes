@@ -3,7 +3,7 @@ import os
 import multiprocessing
 
 # Lists the tiles in a folder in s3
-def download_tiles(source):
+def s3_to_spot(source, tif_dir):
 
     ## For an s3 folder in a bucket using AWSCLI
     # Captures the list of the files in the folder
@@ -21,18 +21,17 @@ def download_tiles(source):
     with open('s3_tiles.txt', 'r') as tile:
         for line in tile:
 
-            # num = len(line)
-            # start = num - 13
-            # end = num - 5
-            # tile_short = line[start:end]
-
             num = len(line.strip('\n').split(" "))
             tile_name = line.strip('\n').split(" ")[num - 1]
 
-            file_list.append(tile_name)
-            # file_list.append(tile_short)
+            if "aux.xml" not in file_list:
+
+                file_list.append(tile_name)
 
     print file_list
+
+    dld = ['aws', 's3', 'cp', source, tif_dir]
+    subprocess.check_call(dld)
 
 
 
@@ -115,7 +114,7 @@ def process_tile(tile_id):
 #
 #     subprocess.check_call(['mkdir raw'])
 
-download_tiles('s3://WHRC-carbon/WHRC_V4/As_provided/')
+s3_to_spot('s3://WHRC-carbon/WHRC_V4/As_provided/', tif_dir)
 
 tif_dir = '../raw/'
 
