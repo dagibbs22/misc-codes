@@ -9,7 +9,6 @@ def create_vrt(tifs):
 
 def list_tiles(tif_dir):
 
-    print "file list will come from here"
     os.system('ls {}*.tif > carbon_tiles.txt'.format(tif_dir))
 
     file_list= []
@@ -24,7 +23,7 @@ def list_tiles(tif_dir):
             tile_short_name = tile_name.replace('_{0}.tif'.format("_carbon"), '')
 
             file_list.append(tile_short_name)
-        print
+        # print
 
     print file_list
 
