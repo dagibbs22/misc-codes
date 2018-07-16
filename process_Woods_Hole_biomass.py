@@ -114,7 +114,7 @@ def process_tile(tile_id):
 
 tif_dir = '../raw/'
 
-s3_to_spot('s3://WHRC-carbon/WHRC_V4/As_provided/', tif_dir)
+s3_to_spot('s3://WHRC-carbon/WHRC_V4/As_provided/')
 
 # print "Creating vrt..."
 # vrtname = create_vrt(tif_dir)
