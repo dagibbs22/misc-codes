@@ -118,6 +118,6 @@ tif_dir = '../raw/'
 #     process_tile(tile)
 #     print "   Tile processed"
 
-count = multiprocessing.cpu_count()
-pool = multiprocessing.Pool(count/2)
-pool.map(process_tile, file_list)
+# count = multiprocessing.cpu_count()
+# pool = multiprocessing.Pool(count/2)
+# pool.map(process_tile, file_list)
