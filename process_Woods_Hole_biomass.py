@@ -108,10 +108,10 @@ print "Getting list of tiles..."
 file_list = list_tiles()
 print "  Tile list retrieved. There are", len(file_list), "tiles in the dataset"
 
-for tile in file_list:
-    print "Processing tile {}".format(tile)
-    process_tile(tile)
-    print "   Tile processed"
+# for tile in file_list:
+#     print "Processing tile {}".format(tile)
+#     process_tile(tile)
+#     print "   Tile processed"
 
 count = multiprocessing.cpu_count()
 pool = multiprocessing.Pool(count/2)
