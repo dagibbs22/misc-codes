@@ -24,7 +24,7 @@ def s3_to_spot(source, tif_dir):
             num = len(line.strip('\n').split(" "))
             tile_name = line.strip('\n').split(" ")[num - 1]
 
-            if "aux.xml" not in file_list:
+            if "aux.xml" not in tile_name:
 
                 file_list.append(tile_name)
 
