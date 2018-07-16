@@ -32,10 +32,12 @@ def s3_to_spot(source):
 
     print tile_path
 
-
-
     dld = ['aws', 's3', 'cp', tile_path, '.']
-    subprocess.check_call(dld)
+    # subprocess.check_call(dld)
+
+    count = multiprocessing.cpu_count()
+    pool = multiprocessing.Pool(count/2)
+    pool.map(subprocess.check_call(dld), file_list)
 
 # creates a virtual raster mosaic
 def create_vrt(tifs):
