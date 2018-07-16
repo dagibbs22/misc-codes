@@ -21,20 +21,10 @@ def list_tiles(tif_dir):
             start = num - 13
             end = num - 5
             tile_short = line[start:end]
-            print num
-            print start
-            print end
-            print tile_short
 
-            # num = len(line.strip('\n').split(" "))
-            #
-            # tile_name = line.strip('\n').split(" ")[num - 1]
-            #
-            # tile_short_name = tile_name.replace('_{0}.tif'.format("_carbon"), '')
-            #
-            # file_list.append(tile_short_name)
+            file_list.append(tile_short)
 
-    # print file_list
+    print file_list
 
 def coords(tile_id):
     NS = tile_id.split("_")[0][-1:]
