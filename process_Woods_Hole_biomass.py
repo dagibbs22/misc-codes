@@ -26,9 +26,13 @@ def s3_to_spot(source):
 
             if "aux.xml" not in tile_name:
 
-                file_list.append(tile_name)
+                tile_path = os.path.join(source, tile_name)
+
+                file_list.append(tile_path)
 
     print file_list
+
+
 
     dld = ['aws', 's3', 'cp', source, '.']
     subprocess.check_call(dld)
