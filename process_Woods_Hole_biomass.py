@@ -31,7 +31,7 @@ def list_tiles(tif_dir):
     # Some tile names were in multiple ecoregions (e.g., 30N_110W in Palearctic and Nearctic). This gets only the unique tile names.
     file_list = set(file_list)
 
-    print "There are", len(file_list), " tiles in the dataset"
+    print "There are", len(file_list), "tiles in the dataset"
 
     return file_list
 
@@ -56,37 +56,36 @@ def coords(tile_id):
     return str(ymax), str(xmin), str(ymin), str(xmax)
 
 def process_tile(tile_id):
-    print "running: {}".format(tile_id)
 
-    print "getting coordinates"
+    print "Getting coordinates for ".format(tile_id), "..."
     ymax, xmin, ymin, xmax = coords(tile_id)
-    print "coordinates are: ymax-", ymax, "; xmin-", xmin, "; ymin-", ymin, "; xmax-", xmax
+    print "Coordinates are: ymax-", ymax, "; ymin-", ymin, "; xmax-", xmax, "; xmin-", xmin
 
-    print "warping tile"
+    print "Warping tile..."
     out = '{}_carbon.tif'.format(tile_id)
     warp = ['gdalwarp', '-t_srs', 'EPSG:4326', '-co', 'COMPRESS=LZW', '-tr', '0.00025', '0.00025', '-tap', '-te', xmin, ymin, xmax, ymax, '-dstnodata', '-9999', vrtname, out]
     subprocess.check_call(warp)
-    print "tile warped"
+    print "Tile warped"
 
-    print "copying tile to s3"
+    print "Copying tile to s3..."
     s3_folder = 's3://WHRC-carbon/WHRC_V4/Processed/'
     cmd = ['aws', 's3', 'cp', out, s3_folder]
     subprocess.check_call(cmd)
-    print "tile copied to s3"
+    print "Tile copied to s3"
 
 
-# Runs the script
+# Runs the process
 
 tif_dir = '../raw/'
 
-print "creating vrt"
+print "Creating vrt..."
 vrtname = create_vrt(tif_dir)
 print "vrt created"
 
-print "getting list of tiles"
+print "Getting list of tiles..."
 file_list = list_tiles(tif_dir)
-print "tile list retrieved"
+print "Tile list retrieved"
 
-
-
+print "Processing tile"
 process_tile('10N_110E')
+print "Tile processed"
