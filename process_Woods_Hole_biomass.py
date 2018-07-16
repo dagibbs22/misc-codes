@@ -31,8 +31,11 @@ def list_tiles(tif_dir):
     # Some tile names were in multiple ecoregions (e.g., 30N_110W in Palearctic and Nearctic). This gets only the unique tile names.
     file_list = set(file_list)
 
+    print "There are", len(file_list), " tiles in the dataset"
+
     return file_list
 
+# Gets the bounding coordinates for each tile
 def coords(tile_id):
     NS = tile_id.split("_")[0][-1:]
     EW = tile_id.split("_")[1][-1:]
@@ -71,6 +74,9 @@ def process_tile(tile_id):
     subprocess.check_call(cmd)
     print "tile copied to s3"
 
+
+# Runs the script
+
 tif_dir = '../raw/'
 
 print "creating vrt"
@@ -79,7 +85,8 @@ print "vrt created"
 
 print "getting list of tiles"
 file_list = list_tiles(tif_dir)
-print file_list
 print "tile list retrieved"
+
+
 
 process_tile('10N_110E')
