@@ -57,21 +57,21 @@ def coords(tile_id):
 
 def process_tile(tile_id):
 
-    print "Getting coordinates for ".format(tile_id), "..."
+    print "Getting coordinates for {}".format(tile_id), "..."
     ymax, xmin, ymin, xmax = coords(tile_id)
-    print "Coordinates are: ymax-", ymax, "; ymin-", ymin, "; xmax-", xmax, "; xmin-", xmin
+    print "   Coordinates are: ymax-", ymax, "; ymin-", ymin, "; xmax-", xmax, "; xmin-", xmin
 
     print "Warping tile..."
     out = '{}_carbon.tif'.format(tile_id)
     warp = ['gdalwarp', '-t_srs', 'EPSG:4326', '-co', 'COMPRESS=LZW', '-tr', '0.00025', '0.00025', '-tap', '-te', xmin, ymin, xmax, ymax, '-dstnodata', '-9999', vrtname, out]
     subprocess.check_call(warp)
-    print "Tile warped"
+    print "   Tile warped"
 
     print "Copying tile to s3..."
     s3_folder = 's3://WHRC-carbon/WHRC_V4/Processed/'
     cmd = ['aws', 's3', 'cp', out, s3_folder]
     subprocess.check_call(cmd)
-    print "Tile copied to s3"
+    print "   Tile copied to s3"
 
 
 # Runs the process
@@ -80,12 +80,13 @@ tif_dir = '../raw/'
 
 print "Creating vrt..."
 vrtname = create_vrt(tif_dir)
-print "vrt created"
+print "   vrt created"
 
 print "Getting list of tiles..."
 file_list = list_tiles(tif_dir)
-print "Tile list retrieved"
+print "   Tile list retrieved"
 
-print "Processing tile"
-process_tile('10N_110E')
-print "Tile processed"
+for tile in file_list:
+    print "Processing tile {}".format(tile)
+    process_tile(tile)
+    print "   Tile processed"
