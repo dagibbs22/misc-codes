@@ -1,14 +1,18 @@
 import subprocess
 import os
 
+# creates a virtual raster mosaic
 def create_vrt(tifs):
+
     vrtname = 'carbon_v4.vrt'
     os.system('gdalbuildvrt {0} {1}*.tif'.format(vrtname, tifs))
 
     return vrtname
 
+# gets a list of all the unique biomass tiles
 def list_tiles(tif_dir):
 
+    # pipes the list of biomass tiles to a text document
     os.system('ls {}*.tif > carbon_tiles.txt'.format(tif_dir))
 
     file_list= []
@@ -24,10 +28,10 @@ def list_tiles(tif_dir):
 
             file_list.append(tile_short)
 
+    # Some tile names were in multiple ecoregions (e.g., 30N_110W in Palearctic and Nearctic). This gets only the unique tile names.
     file_list = set(file_list)
 
-    print file_list
-    print len(file_list)
+    return file_list
 
 def coords(tile_id):
     NS = tile_id.split("_")[0][-1:]
@@ -74,7 +78,8 @@ vrtname = create_vrt(tif_dir)
 print "vrt created"
 
 print "getting list of tiles"
-list = list_tiles(tif_dir)
+file_list = list_tiles(tif_dir)
+print file_list
 print "tile list retrieved"
 
 process_tile('10N_110E')
