@@ -9,6 +9,8 @@ def download_tiles():
     cmd = ['aws', 's3', 'ls', dest, '>', 's3_carbon_tiles.txt']
     subprocess.check_call(cmd, shell=True)
 
+    file_list= []
+
     # Iterates through the text file to get the names of the tiles and appends them to list
     with open('s3_carbon_tiles.txt', 'r') as tile:
         for line in tile:
