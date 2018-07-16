@@ -16,16 +16,25 @@ def list_tiles(tif_dir):
     # Iterates through the text file to get the names of the tiles and appends them to list
     with open('carbon_tiles.txt', 'r') as tile:
         for line in tile:
-            num = len(line.strip('\n').split(" "))
 
-            tile_name = line.strip('\n').split(" ")[num - 1]
+            num = len(line)
+            start = num - 10
+            end = num - 3
+            tile_short = line[start:end]
+            print num
+            print start
+            print end
+            print tile_short
 
-            tile_short_name = tile_name.replace('_{0}.tif'.format("_carbon"), '')
+            # num = len(line.strip('\n').split(" "))
+            #
+            # tile_name = line.strip('\n').split(" ")[num - 1]
+            #
+            # tile_short_name = tile_name.replace('_{0}.tif'.format("_carbon"), '')
+            #
+            # file_list.append(tile_short_name)
 
-            file_list.append(tile_short_name)
-        # print
-
-    print file_list
+    # print file_list
 
 def coords(tile_id):
     NS = tile_id.split("_")[0][-1:]
