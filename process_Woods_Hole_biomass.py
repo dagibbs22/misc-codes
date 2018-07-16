@@ -18,7 +18,7 @@ def list_tiles(tif_dir):
             # tile_short_name = tile_name.replace('_{0}.tif'.format(pool), '')
             #
             # file_list.append(tile_short_name)
-    print "hello"
+        print "hello"
 
     print file_list
 
