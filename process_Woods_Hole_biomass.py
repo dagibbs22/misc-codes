@@ -21,12 +21,13 @@ def download_tiles(source):
     with open('s3_tiles.txt', 'r') as tile:
         for line in tile:
 
-            num = len(line)
-            start = num - 13
-            end = num - 5
-            tile_short = line[start:end]
+            # num = len(line)
+            # start = num - 13
+            # end = num - 5
+            # tile_short = line[start:end]
 
-            file_list.append(tile_short)
+            file_list.append(line)
+            # file_list.append(tile_short)
 
     print file_list
 
