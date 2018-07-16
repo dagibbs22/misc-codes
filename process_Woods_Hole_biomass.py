@@ -18,7 +18,7 @@ def list_tiles(tif_dir):
         for line in tile:
 
             num = len(line)
-            start = num - 14
+            start = num - 13
             end = num - 5
             tile_short = line[start:end]
             print num
