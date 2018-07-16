@@ -24,7 +24,7 @@ def list_tiles(tif_dir):
             print num
             print start
             print end
-            print tile_short
+            # print tile_short
 
             # num = len(line.strip('\n').split(" "))
             #
