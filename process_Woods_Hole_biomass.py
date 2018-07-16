@@ -30,11 +30,11 @@ def s3_to_spot(source):
 
                 file_list.append(tile_path)
 
-    print file_list
+    print tile_path
 
 
 
-    dld = ['aws', 's3', 'cp', source, '.']
+    dld = ['aws', 's3', 'cp', tile_path, '.']
     subprocess.check_call(dld)
 
 # creates a virtual raster mosaic
