@@ -101,7 +101,7 @@ def process_tile(tile_id):
 #
 #     subprocess.check_call(['mkdir raw'])
 
-download_tiles()
+download_tiles
 
 tif_dir = '../raw/'
 
