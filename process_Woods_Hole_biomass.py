@@ -2,39 +2,9 @@ import subprocess
 import os
 import multiprocessing
 
-# # Lists the tiles in a folder in s3
-# def s3_list(source):
-#
-#     # Captures the list of the files in the folder
-#     out = subprocess.Popen(['aws', 's3', 'ls', source], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-#     stdout, stderr = out.communicate()
-#
-#     # Writes the output string to a text file for easier interpretation
-#     s3_tiles = open("s3_tiles.txt", "w")
-#     s3_tiles.write(stdout)
-#     s3_tiles.close()
-#
-#     file_list= []
-#
-#     # Iterates through the text file to get the names of the tiles and appends them to list
-#     with open('s3_tiles.txt', 'r') as tile:
-#         for line in tile:
-#
-#             # Gets the tile name from the multiple columns of tile attributes
-#             num = len(line.strip('\n').split(" "))
-#             tile_name = line.strip('\n').split(" ")[num - 1]
-#
-#             # Ignores the xml files
-#             if "aux.xml" not in tile_name:
-#
-#                 tile_path = os.path.join(source, tile_name)
-#                 file_list.append(tile_path)
-#
-#     return file_list
-
 # Copies the tiles in the s3 folder to the spot machine.
 def s3_to_spot(folder):
-    dld = ['aws', 's3', 'cp', folder, '.', '--recursive', '--include', '.tif']
+    dld = ['aws', 's3', 'cp', folder, '.', '--recursive', '--exclude', '*.xml']
     subprocess.check_call(dld)
 
 # Creates a virtual raster mosaic
@@ -112,33 +82,31 @@ def process_tile(tile_id):
 
 # Runs the process
 
-# if os.path.exists('../raw/') = False:
-#
-#     subprocess.check_call(['mkdir raw'])
-
 tif_dir = '../raw/'
 
 # Location of the tiles on s3
 s3_locn = 's3://WHRC-carbon/WHRC_V4/As_provided/'
 
 # Creates a list of all the tiles on s3
+print "Copying raw tiles to spot machine"
 s3_to_spot(s3_locn)
+print "  Raw tiles copies"
 
 
 
-# print "Creating vrt..."
-# vrtname = create_vrt(tif_dir)
-# print "  vrt created"
-#
-# print "Getting list of tiles..."
-# file_list = list_tiles(tif_dir)
-# print "  Tile list retrieved. There are", len(file_list), "tiles in the dataset"
+print "Creating vrt..."
+vrtname = create_vrt(tif_dir)
+print "  vrt created"
 
-# for tile in file_list:
-#     print "Processing tile {}".format(tile)
-#     process_tile(tile)
-#     print "   Tile processed"
+print "Getting list of tiles..."
+file_list = list_tiles(tif_dir)
+print "  Tile list retrieved. There are", len(file_list), "tiles in the dataset"
 
-# count = multiprocessing.cpu_count()
-# pool = multiprocessing.Pool(count/2)
-# pool.map(process_tile, file_list)
+for tile in file_list:
+    print "Processing tile {}".format(tile)
+    process_tile(tile)
+    print "   Tile processed"
+
+count = multiprocessing.cpu_count()
+pool = multiprocessing.Pool(count/2)
+pool.map(process_tile, file_list)
