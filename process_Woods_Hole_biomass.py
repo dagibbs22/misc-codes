@@ -2,6 +2,26 @@ import subprocess
 import os
 import multiprocessing
 
+def download_tiles():
+
+    # Gets the list of tiles in s3 and pipes them to a textfile
+    dest = 's3://WHRC-carbon/WHRC_V4/As_provided/'
+    cmd = ['aws', 's3', 'ls', dest, '>', 's3_carbon_tiles.txt']
+    subprocess.check_call(cmd, shell=True)
+
+    # Iterates through the text file to get the names of the tiles and appends them to list
+    with open('s3_carbon_tiles.txt', 'r') as tile:
+        for line in tile:
+
+            num = len(line)
+            start = num - 13
+            end = num - 5
+            tile_short = line[start:end]
+
+            file_list.append(tile_short)
+
+    print file_list
+
 # creates a virtual raster mosaic
 def create_vrt(tifs):
 
@@ -11,15 +31,17 @@ def create_vrt(tifs):
     return vrtname
 
 # gets a list of all the unique biomass tiles
-def list_tiles(tif_dir):
+def list_tiles(tif_dir, location):
 
-    # pipes the list of biomass tiles to a text document
-    os.system('ls {}*.tif > carbon_tiles.txt'.format(tif_dir))
+    if location == "spot":
+
+        # pipes the list of biomass tiles to a text document
+        os.system('ls {}*.tif > spot_carbon_tiles.txt'.format(tif_dir))
 
     file_list= []
 
     # Iterates through the text file to get the names of the tiles and appends them to list
-    with open('carbon_tiles.txt', 'r') as tile:
+    with open('spot_carbon_tiles.txt', 'r') as tile:
         for line in tile:
 
             num = len(line)
@@ -31,8 +53,6 @@ def list_tiles(tif_dir):
 
     # Some tile names were in multiple ecoregions (e.g., 30N_110W in Palearctic and Nearctic). This gets only the unique tile names.
     file_list = set(file_list)
-
-    print "There are", len(file_list), "tiles in the dataset"
 
     return file_list
 
@@ -77,15 +97,21 @@ def process_tile(tile_id):
 
 # Runs the process
 
+# if os.path.exists('../raw/') = False:
+#
+#     subprocess.check_call(['mkdir raw'])
+
+download_tiles()
+
 tif_dir = '../raw/'
 
-print "Creating vrt..."
-vrtname = create_vrt(tif_dir)
-print "  vrt created"
-
-print "Getting list of tiles..."
-file_list = list_tiles(tif_dir)
-print "  Tile list retrieved"
+# print "Creating vrt..."
+# vrtname = create_vrt(tif_dir)
+# print "  vrt created"
+#
+# print "Getting list of tiles..."
+# file_list = list_tiles(tif_dir, "spot")
+# print "  Tile list retrieved. There are", len(file_list), "tiles in the dataset"
 
 # for tile in file_list:
 #     print "Processing tile {}".format(tile)
