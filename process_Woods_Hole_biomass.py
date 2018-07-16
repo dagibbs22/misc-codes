@@ -24,12 +24,9 @@ def list_tiles(tif_dir):
 
             file_list.append(tile_short)
 
-    print file_list
-
-    print len(file_list)
-
     file_list = set(file_list)
 
+    print file_list
     print len(file_list)
 
 def coords(tile_id):
