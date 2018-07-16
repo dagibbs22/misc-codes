@@ -126,7 +126,7 @@ dld = ['aws', 's3', 'cp', s3_locn, '.']
 
 count = multiprocessing.cpu_count()
 pool = multiprocessing.Pool(count / 2)
-pool.map(s3_to_spot(), file_list)
+pool.map(s3_to_spot, file_list)
 
 # print "Creating vrt..."
 # vrtname = create_vrt(tif_dir)
