@@ -3,7 +3,7 @@ import os
 import multiprocessing
 
 # Lists the tiles in a folder in s3
-def s3_to_spot(source):
+def s3_list(source):
 
     ## For an s3 folder in a bucket using AWSCLI
     # Captures the list of the files in the folder
@@ -33,6 +33,9 @@ def s3_to_spot(source):
     print file_list
     return file_list
 
+def s3_to_spot(file):
+    dld = ['aws', 's3', 'cp', file, '.']
+    subprocess.check_call(dld)
 
 # creates a virtual raster mosaic
 def create_vrt(tifs):
@@ -117,13 +120,13 @@ tif_dir = '../raw/'
 
 s3_locn = 's3://WHRC-carbon/WHRC_V4/As_provided/'
 
-file_list = s3_to_spot(s3_locn)
+file_list = s3_list(s3_locn)
 
 dld = ['aws', 's3', 'cp', s3_locn, '.']
 
 count = multiprocessing.cpu_count()
 pool = multiprocessing.Pool(count / 2)
-pool.map(subprocess.check_call(dld), file_list)
+pool.map(s3_to_spot(), file_list)
 
 # print "Creating vrt..."
 # vrtname = create_vrt(tif_dir)
