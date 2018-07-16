@@ -26,6 +26,12 @@ def list_tiles(tif_dir):
 
     print file_list
 
+    print len(file_list)
+
+    file_list = set(file_list)
+
+    print len(file_list)
+
 def coords(tile_id):
     NS = tile_id.split("_")[0][-1:]
     EW = tile_id.split("_")[1][-1:]
