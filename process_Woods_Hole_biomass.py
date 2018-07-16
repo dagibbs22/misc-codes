@@ -115,9 +115,11 @@ def process_tile(tile_id):
 
 tif_dir = '../raw/'
 
-s3_to_spot('s3://WHRC-carbon/WHRC_V4/As_provided/')
+s3_locn = 's3://WHRC-carbon/WHRC_V4/As_provided/'
 
-dld = ['aws', 's3', 'cp', tile_path, '.']
+s3_to_spot(s3_locn)
+
+dld = ['aws', 's3', 'cp', s3_locn, '.']
 
 # count = multiprocessing.cpu_count()
 # pool = multiprocessing.Pool(count / 2)
