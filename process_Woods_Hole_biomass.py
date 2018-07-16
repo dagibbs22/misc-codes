@@ -8,18 +8,18 @@ def s3_to_spot(folder):
     subprocess.check_call(dld)
 
 # Creates a virtual raster mosaic
-def create_vrt(tifs):
+def create_vrt():
 
     vrtname = 'carbon_v4.vrt'
-    os.system('gdalbuildvrt {0} {1}*.tif'.format(vrtname, tifs))
+    os.system('gdalbuildvrt {0} *.tif'.format(vrtname))
 
     return vrtname
 
 # Gets a list of all the unique biomass tiles
-def list_tiles(tif_dir):
+def list_tiles():
 
     # Makes a text file of the tifs in the folder
-    os.system('ls {}*.tif > spot_carbon_tiles.txt'.format(tif_dir))
+    os.system('ls *.tif > spot_carbon_tiles.txt')
 
     file_list= []
 
@@ -87,19 +87,19 @@ tif_dir = '../raw/'
 # Location of the tiles on s3
 s3_locn = 's3://WHRC-carbon/WHRC_V4/As_provided/'
 
-# Creates a list of all the tiles on s3
-print "Copying raw tiles to spot machine"
-s3_to_spot(s3_locn)
-print "  Raw tiles copies"
+if os.path.exists('./Palearctic_MapV4_60N_010W.tif') == False:
 
-
+    # Creates a list of all the tiles on s3
+    print "Copying raw tiles to spot machine"
+    s3_to_spot(s3_locn)
+    print "  Raw tiles copies"
 
 print "Creating vrt..."
-vrtname = create_vrt(tif_dir)
+vrtname = create_vrt()
 print "  vrt created"
 
 print "Getting list of tiles..."
-file_list = list_tiles(tif_dir)
+file_list = list_tiles()
 print "  Tile list retrieved. There are", len(file_list), "tiles in the dataset"
 
 for tile in file_list:
@@ -110,3 +110,5 @@ for tile in file_list:
 count = multiprocessing.cpu_count()
 pool = multiprocessing.Pool(count/2)
 pool.map(process_tile, file_list)
+
+
