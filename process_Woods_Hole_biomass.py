@@ -30,14 +30,9 @@ def s3_to_spot(source):
 
                 file_list.append(tile_path)
 
-    print tile_path
+    print file_list
+    return file_list
 
-    dld = ['aws', 's3', 'cp', tile_path, '.']
-    # subprocess.check_call(dld)
-
-    count = multiprocessing.cpu_count()
-    pool = multiprocessing.Pool(count/2)
-    pool.map(subprocess.check_call(dld), file_list)
 
 # creates a virtual raster mosaic
 def create_vrt(tifs):
@@ -121,6 +116,12 @@ def process_tile(tile_id):
 tif_dir = '../raw/'
 
 s3_to_spot('s3://WHRC-carbon/WHRC_V4/As_provided/')
+
+dld = ['aws', 's3', 'cp', tile_path, '.']
+
+# count = multiprocessing.cpu_count()
+# pool = multiprocessing.Pool(count / 2)
+# pool.map(subprocess.check_call(dld), file_list)
 
 # print "Creating vrt..."
 # vrtname = create_vrt(tif_dir)
