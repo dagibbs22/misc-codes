@@ -10,6 +10,7 @@ def download_tiles(source):
     # Gets the list of tiles in s3 and pipes them to a textfile
     source = 's3://WHRC-carbon/WHRC_V4/As_provided/'
     cmd = ['aws', 's3', 'ls', source, '>', 's3_carbon_tiles.txt']
+    cmd = ['aws', 's3', 'ls', source]
     subprocess.check_call(cmd, shell=True)
 
     # pool= 'carbon'
