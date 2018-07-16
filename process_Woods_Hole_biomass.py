@@ -4,6 +4,8 @@ import multiprocessing
 
 def download_tiles():
 
+    print "Hello"
+
     # Gets the list of tiles in s3 and pipes them to a textfile
     dest = 's3://WHRC-carbon/WHRC_V4/As_provided/'
     cmd = ['aws', 's3', 'ls', dest, '>', 's3_carbon_tiles.txt']
