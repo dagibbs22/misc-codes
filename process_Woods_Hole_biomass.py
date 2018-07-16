@@ -1,6 +1,12 @@
 import subprocess
 import os
 
+def create_vrt(tifs):
+    vrtname = 'carbon_v4.vrt'
+    os.system('gdalbuildvrt {0} {1}*.tif'.format(vrtname, tifs))
+
+    return vrtname
+
 def list_tiles(tif_dir):
 
     print "file list will come from here"
@@ -11,22 +17,16 @@ def list_tiles(tif_dir):
     # Iterates through the text file to get the names of the tiles and appends them to list
     with open('carbon_tiles.txt', 'r') as tile:
         for line in tile:
-            # num = len(line.strip('\n').split(" "))
-            #
-            # tile_name = line.strip('\n').split(" ")[num - 1]
-            #
-            # tile_short_name = tile_name.replace('_{0}.tif'.format(pool), '')
-            #
-            # file_list.append(tile_short_name)
-        print "hello"
+            num = len(line.strip('\n').split(" "))
+
+            tile_name = line.strip('\n').split(" ")[num - 1]
+
+            tile_short_name = tile_name.replace('_{0}.tif'.format("_carbon"), '')
+
+            file_list.append(tile_short_name)
+        print
 
     print file_list
-
-def create_vrt(tifs):
-    vrtname = 'carbon_v4.vrt'
-    os.system('gdalbuildvrt {0} {1}*.tif'.format(vrtname, tifs))
-
-    return vrtname
 
 def coords(tile_id):
     NS = tile_id.split("_")[0][-1:]
