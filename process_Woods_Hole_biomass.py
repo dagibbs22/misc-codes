@@ -3,7 +3,7 @@ import os
 import multiprocessing
 
 # Lists the tiles in a folder in s3
-def s3_to_spot(source, tif_dir):
+def s3_to_spot(source):
 
     ## For an s3 folder in a bucket using AWSCLI
     # Captures the list of the files in the folder
@@ -30,10 +30,8 @@ def s3_to_spot(source, tif_dir):
 
     print file_list
 
-    dld = ['aws', 's3', 'cp', source, tif_dir]
+    dld = ['aws', 's3', 'cp', source, '.']
     subprocess.check_call(dld)
-
-
 
 # creates a virtual raster mosaic
 def create_vrt(tifs):
