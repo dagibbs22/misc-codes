@@ -2,12 +2,12 @@ import subprocess
 import os
 import multiprocessing
 
-def download_tiles():
+def download_tiles(dest):
 
     print "Hello"
 
     # Gets the list of tiles in s3 and pipes them to a textfile
-    dest = 's3://WHRC-carbon/WHRC_V4/As_provided/'
+    # dest = 's3://WHRC-carbon/WHRC_V4/As_provided/'
     cmd = ['aws', 's3', 'ls', dest, '>', 's3_carbon_tiles.txt']
     subprocess.check_call(cmd, shell=True)
 
@@ -105,7 +105,7 @@ def process_tile(tile_id):
 #
 #     subprocess.check_call(['mkdir raw'])
 
-download_tiles
+download_tiles('s3://WHRC-carbon/WHRC_V4/As_provided/')
 
 tif_dir = '../raw/'
 
